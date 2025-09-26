@@ -149,7 +149,7 @@ export default function InteractiveMap({
   }, [filteredCountries]);
 
   return (
-    <div className={`relative ${className}`} data-testid="container-interactive-map">
+    <div className={`relative z-0 ${className}`} data-testid="container-interactive-map">
       <div 
         ref={mapRef} 
         className="w-full h-full"
