@@ -108,6 +108,42 @@ export const mapData: CountryData[] = [
       "Government policy has not yet caught up to the needs of the tech ecosystem."
     ],
     literature_link: "https://nitda.gov.ng/national-artificial-intelligence-policy/"
+  },
+  {
+    name: "Singapore Compute Node 1",
+    lat: 1.316690568586346,
+    lng: 103.70248257523349,
+    type: "Compute North (Regional Hub)",
+    governance_score: 85,
+    governance_progress: [
+      "Strategic compute infrastructure in Southeast Asia financial district.",
+      "Advanced connectivity and low-latency access to regional markets.",
+      "Strong regulatory framework for data center operations."
+    ],
+    governance_gaps: [
+      "Limited domestic chip manufacturing capabilities.",
+      "High dependency on foreign technology imports.",
+      "Space constraints for large-scale infrastructure expansion."
+    ],
+    literature_link: "https://www.smartnation.gov.sg/why-Smart-Nation/NationalAIStrategy"
+  },
+  {
+    name: "Singapore Compute Node 2", 
+    lat: 1.3175593746768843,
+    lng: 103.7021607101681,
+    type: "Compute North (Regional Hub)",
+    governance_score: 85,
+    governance_progress: [
+      "High-performance compute facility with regional connectivity.",
+      "Robust power infrastructure and cooling systems.",
+      "Compliance with international data governance standards."
+    ],
+    governance_gaps: [
+      "Limited domestic chip manufacturing capabilities.",
+      "High dependency on foreign technology imports.", 
+      "Space constraints for large-scale infrastructure expansion."
+    ],
+    literature_link: "https://www.smartnation.gov.sg/why-Smart-Nation/NationalAIStrategy"
   }
 ];
 
