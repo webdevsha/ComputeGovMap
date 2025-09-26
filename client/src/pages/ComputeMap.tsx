@@ -7,6 +7,7 @@ import MapLegend from "../components/MapLegend";
 import LayerControls from "../components/LayerControls";
 import SearchBox from "../components/SearchBox";
 import GovernanceFilter from "../components/GovernanceFilter";
+import DataExport from "../components/DataExport";
 
 export default function ComputeMap() {
   const [visibleLayers, setVisibleLayers] = useState<Record<ComputeType, boolean>>({
@@ -97,12 +98,31 @@ export default function ComputeMap() {
               onScoreRangeChange={setScoreRange}
               className="flex-shrink-0 pointer-events-auto"
             />
+            <DataExport 
+              countries={filteredCountries}
+              allCountries={mapData}
+              visibleCountries={mapData.filter(country => {
+                const computeType = country.type.includes("Compute Rich") ? "Compute Rich" : 
+                                 country.type.includes("Compute South") ? "Compute South" : "Compute Desert";
+                return visibleLayers[computeType];
+              })}
+              className="flex-shrink-0 pointer-events-auto"
+            />
           </div>
         </div>
         
         {/* Legend - Top Right on Desktop, Hidden on Mobile */}
-        <div className="absolute top-4 right-4 z-10 hidden md:block" data-testid="container-legend">
+        <div className="absolute top-4 right-4 z-10 hidden md:block space-y-4" data-testid="container-legend">
           <MapLegend />
+          <DataExport 
+            countries={filteredCountries}
+            allCountries={mapData}
+            visibleCountries={mapData.filter(country => {
+              const computeType = country.type.includes("Compute Rich") ? "Compute Rich" : 
+                               country.type.includes("Compute South") ? "Compute South" : "Compute Desert";
+              return visibleLayers[computeType];
+            })}
+          />
         </div>
       </div>
     </div>
