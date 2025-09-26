@@ -84,6 +84,12 @@ export default function InteractiveMap({
       mapInstanceRef.current.removeLayer(overlay);
     });
     overlaysRef.current = [];
+    
+    // Clear existing heatmap layers
+    heatmapRef.current.forEach(layer => {
+      mapInstanceRef.current.removeLayer(layer);
+    });
+    heatmapRef.current = [];
 
     // Add country boundary shading for filtered countries using proper GeoJSON data
     filteredCountries.forEach((country) => {
@@ -167,7 +173,67 @@ export default function InteractiveMap({
       marker.addTo(mapInstanceRef.current);
       markersRef.current.push(marker);
     });
-  }, [filteredCountries]);
+
+    // Add ASEAN heatmap layer if enabled
+    if (showHeatmap) {
+      aseanGovernanceData.forEach((countryData) => {
+        const countryId = aseanCountryMapping[countryData.Country];
+        const geoJsonFeature = worldCountries.features.find(
+          (feature: any) => feature.id === countryId || feature.properties.name === countryData.Country
+        );
+
+        if (geoJsonFeature) {
+          // Calculate heatmap color based on governance maturity
+          const getHeatmapColor = (intensity: number): string => {
+            // Red to Yellow to Green gradient
+            if (intensity === 0) return "#dc2626"; // Red - No governance
+            if (intensity <= 0.25) return "#ea580c"; // Orange-Red - Very low
+            if (intensity <= 0.5) return "#eab308"; // Yellow - Low
+            if (intensity <= 0.75) return "#84cc16"; // Yellow-Green - Medium
+            return "#16a34a"; // Green - High governance
+          };
+
+          const heatmapLayer = L.geoJSON(geoJsonFeature, {
+            style: {
+              fillColor: getHeatmapColor(countryData.HeatmapIntensity),
+              weight: 1,
+              opacity: 0.8,
+              color: "#ffffff",
+              fillOpacity: 0.6
+            }
+          });
+
+          // Add click event to show governance details
+          heatmapLayer.on('click', () => {
+            // Find or create country data for governance tooltip
+            const tooltipData: CountryData = {
+              name: countryData.Country,
+              lat: 0, // These will be calculated from bounds
+              lng: 0,
+              type: "ASEAN",
+              governance_score: countryData.OverallScore,
+              governance_gaps: [
+                countryData.ExportControls === "No" ? "Export Controls" : null,
+                countryData.ReportingRegistries === "No" ? "Reporting Registries" : null,
+                countryData.CloudRecordKeeping === "No" ? "Cloud Record Keeping" : null,
+                countryData.ModelEvals === "No" ? "Model Evaluations" : null
+              ].filter(Boolean) as string[],
+              literature_links: [`ASEAN AI Governance Report - ${countryData.Country}`]
+            };
+
+            if (onCountrySelect) {
+              onCountrySelect(tooltipData);
+            } else {
+              setInternalSelectedCountry(tooltipData);
+            }
+          });
+
+          heatmapLayer.addTo(mapInstanceRef.current);
+          heatmapRef.current.push(heatmapLayer);
+        }
+      });
+    }
+  }, [filteredCountries, showHeatmap]);
 
   return (
     <div className={`relative z-0 ${className}`} data-testid="container-interactive-map">

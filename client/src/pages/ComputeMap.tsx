@@ -8,6 +8,7 @@ import LayerControls from "../components/LayerControls";
 import SearchBox from "../components/SearchBox";
 import GovernanceFilter from "../components/GovernanceFilter";
 import DataExport from "../components/DataExport";
+import HeatmapToggle from "../components/HeatmapToggle";
 
 export default function ComputeMap() {
   const [visibleLayers, setVisibleLayers] = useState<Record<ComputeType, boolean>>({
@@ -18,6 +19,7 @@ export default function ComputeMap() {
   const [scoreRange, setScoreRange] = useState<[number, number]>([0, 100]);
   const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(null);
   const [mapInstance, setMapInstance] = useState<any>(null);
+  const [showHeatmap, setShowHeatmap] = useState<boolean>(false);
 
   // Filter countries based on governance score range and visible layers
   const filteredCountries = useMemo(() => {
@@ -63,6 +65,7 @@ export default function ComputeMap() {
           onCountrySelect={setSelectedCountry}
           onMapReady={setMapInstance}
           className="w-full h-full"
+          showHeatmap={showHeatmap}
         />
         
         {/* Search Box - Top Center on Desktop, Top on Mobile */}
@@ -83,6 +86,10 @@ export default function ComputeMap() {
             scoreRange={scoreRange}
             onScoreRangeChange={setScoreRange}
           />
+          <HeatmapToggle
+            showHeatmap={showHeatmap}
+            onToggle={setShowHeatmap}
+          />
         </div>
         
         {/* Mobile Controls - Bottom */}
@@ -96,6 +103,11 @@ export default function ComputeMap() {
             <GovernanceFilter 
               scoreRange={scoreRange}
               onScoreRangeChange={setScoreRange}
+              className="flex-shrink-0 pointer-events-auto"
+            />
+            <HeatmapToggle
+              showHeatmap={showHeatmap}
+              onToggle={setShowHeatmap}
               className="flex-shrink-0 pointer-events-auto"
             />
             <DataExport 
