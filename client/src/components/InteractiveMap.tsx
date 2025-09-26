@@ -84,12 +84,6 @@ export default function InteractiveMap({
       mapInstanceRef.current.removeLayer(overlay);
     });
     overlaysRef.current = [];
-    
-    // Clear existing heatmap layers
-    heatmapRef.current.forEach(layer => {
-      mapInstanceRef.current.removeLayer(layer);
-    });
-    heatmapRef.current = [];
 
     // Add country boundary shading for filtered countries using proper GeoJSON data
     filteredCountries.forEach((country) => {
@@ -174,7 +168,19 @@ export default function InteractiveMap({
       markersRef.current.push(marker);
     });
 
-    // Add ASEAN heatmap layer if enabled
+  }, [filteredCountries]);
+
+  // Separate effect to handle heatmap toggle without affecting other layers
+  useEffect(() => {
+    if (!mapInstanceRef.current) return;
+
+    // Clear existing heatmap layers when toggling
+    heatmapRef.current.forEach(layer => {
+      mapInstanceRef.current.removeLayer(layer);
+    });
+    heatmapRef.current = [];
+
+    // Only add heatmap if enabled
     if (showHeatmap) {
       aseanGovernanceData.forEach((countryData) => {
         const countryId = aseanCountryMapping[countryData.Country];
@@ -203,6 +209,11 @@ export default function InteractiveMap({
             }
           });
 
+          // Ensure heatmap renders below markers by sending to back
+          heatmapLayer.on('add', () => {
+            heatmapLayer.bringToBack();
+          });
+
           // Add click event to show governance details
           heatmapLayer.on('click', () => {
             // Find or create country data for governance tooltip
@@ -211,14 +222,20 @@ export default function InteractiveMap({
               lat: 0, // These will be calculated from bounds
               lng: 0,
               type: "ASEAN",
-              governance_score: countryData.OverallScore,
+              governance_score: (countryData.OverallScore / 4) * 100, // Scale to 0-100% for tooltip
+              governance_progress: [
+                countryData.ExportControls !== "No" ? `Export Controls: ${countryData.ExportControls}` : null,
+                countryData.ReportingRegistries !== "No" ? `Reporting Registries: ${countryData.ReportingRegistries}` : null,
+                countryData.CloudRecordKeeping !== "No" ? `Cloud Record Keeping: ${countryData.CloudRecordKeeping}` : null,
+                countryData.ModelEvals !== "No" ? `Model Evaluations: ${countryData.ModelEvals}` : null
+              ].filter(Boolean) as string[],
               governance_gaps: [
                 countryData.ExportControls === "No" ? "Export Controls" : null,
                 countryData.ReportingRegistries === "No" ? "Reporting Registries" : null,
                 countryData.CloudRecordKeeping === "No" ? "Cloud Record Keeping" : null,
                 countryData.ModelEvals === "No" ? "Model Evaluations" : null
               ].filter(Boolean) as string[],
-              literature_links: [`ASEAN AI Governance Report - ${countryData.Country}`]
+              literature_link: `https://example.com/asean-governance-${countryData.Country.toLowerCase()}`
             };
 
             if (onCountrySelect) {
@@ -233,7 +250,7 @@ export default function InteractiveMap({
         }
       });
     }
-  }, [filteredCountries, showHeatmap]);
+  }, [showHeatmap]);
 
   return (
     <div className={`relative z-0 ${className}`} data-testid="container-interactive-map">
