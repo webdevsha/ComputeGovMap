@@ -43,7 +43,7 @@ export default function MapLegend({ className = "" }: MapLegendProps) {
   ];
 
   return (
-    <Card className={`w-80 ${className}`} data-testid="card-legend">
+    <Card className={`w-72 md:w-80 ${className}`} data-testid="card-legend">
       <CardHeader className="pb-3">
         <CardTitle className="text-lg font-semibold" data-testid="text-legend-title">
           Global Compute Landscape

@@ -17,7 +17,7 @@ export default function LayerControls({ visibleLayers, onLayerToggle, className 
   ];
 
   return (
-    <Card className={`w-64 ${className}`} data-testid="card-layer-controls">
+    <Card className={`w-56 md:w-64 ${className}`} data-testid="card-layer-controls">
       <CardHeader className="pb-3">
         <CardTitle className="text-sm font-semibold" data-testid="text-controls-title">
           Layer Controls

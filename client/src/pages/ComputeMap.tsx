@@ -48,12 +48,12 @@ export default function ComputeMap() {
   };
 
   return (
-    <div className="min-h-screen bg-background" data-testid="page-compute-map">
+    <div className="flex flex-col h-screen bg-background" data-testid="page-compute-map">
       {/* Header */}
       <MapHeader />
       
       {/* Main map container */}
-      <div className="relative flex-1" style={{ height: 'calc(100vh - 140px)' }}>
+      <div className="relative flex-1 min-h-0">
         {/* Map */}
         <InteractiveMap 
           visibleLayers={visibleLayers}
@@ -64,16 +64,16 @@ export default function ComputeMap() {
           className="w-full h-full"
         />
         
-        {/* Search Box - Top Center */}
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 w-80" data-testid="container-search">
+        {/* Search Box - Top Center on Desktop, Top on Mobile */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 w-80 max-w-[calc(100vw-2rem)] px-2 md:px-0" data-testid="container-search">
           <SearchBox 
             countries={mapData}
             onCountrySelect={handleCountrySelect}
           />
         </div>
         
-        {/* Layer Controls - Top Left */}
-        <div className="absolute top-4 left-4 z-10 space-y-4" data-testid="container-controls">
+        {/* Layer Controls - Top Left on Desktop, Bottom Left on Mobile */}
+        <div className="absolute top-4 left-4 z-10 space-y-4 md:space-y-4 md:block hidden" data-testid="container-controls-desktop">
           <LayerControls 
             visibleLayers={visibleLayers}
             onLayerToggle={handleLayerToggle}
@@ -84,8 +84,24 @@ export default function ComputeMap() {
           />
         </div>
         
-        {/* Legend - Top Right */}
-        <div className="absolute top-4 right-4 z-10" data-testid="container-legend">
+        {/* Mobile Controls - Bottom */}
+        <div className="absolute bottom-4 left-4 right-4 z-10 md:hidden flex flex-col space-y-2 pointer-events-none pb-safe" data-testid="container-controls-mobile">
+          <div className="flex gap-2 overflow-x-auto pointer-events-auto">
+            <LayerControls 
+              visibleLayers={visibleLayers}
+              onLayerToggle={handleLayerToggle}
+              className="flex-shrink-0 pointer-events-auto"
+            />
+            <GovernanceFilter 
+              scoreRange={scoreRange}
+              onScoreRangeChange={setScoreRange}
+              className="flex-shrink-0 pointer-events-auto"
+            />
+          </div>
+        </div>
+        
+        {/* Legend - Top Right on Desktop, Hidden on Mobile */}
+        <div className="absolute top-4 right-4 z-10 hidden md:block" data-testid="container-legend">
           <MapLegend />
         </div>
       </div>

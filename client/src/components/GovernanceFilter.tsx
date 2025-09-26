@@ -20,7 +20,7 @@ export default function GovernanceFilter({ scoreRange, onScoreRangeChange, class
   const maxBand = getGovernanceBand(scoreRange[1]);
 
   return (
-    <Card className={`w-64 ${className}`} data-testid="card-governance-filter">
+    <Card className={`w-56 md:w-64 ${className}`} data-testid="card-governance-filter">
       <CardHeader className="pb-3">
         <CardTitle className="text-sm font-semibold" data-testid="text-filter-title">
           Governance Filter
