@@ -5,6 +5,7 @@ const mockCountry = {
   lat: 37.3875,
   lng: -122.0575,
   type: "Compute Rich (Frontier)" as const,
+  governance_score: 78,
   governance_progress: [
     "Home to major AI labs with advanced safety frameworks (OpenAI, Anthropic).",
     "Leads in frontier model R&D and chip design (NVIDIA).",

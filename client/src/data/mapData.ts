@@ -6,6 +6,7 @@ export const mapData: CountryData[] = [
     lat: 37.3875,
     lng: -122.0575,
     type: "Compute Rich (Frontier)",
+    governance_score: 78,
     governance_progress: [
       "Home to major AI labs with advanced safety frameworks (OpenAI, Anthropic).",
       "Leads in frontier model R&D and chip design (NVIDIA).",
@@ -23,6 +24,7 @@ export const mapData: CountryData[] = [
     lat: 39.9042,
     lng: 116.4074,
     type: "Compute Rich (State-Driven)",
+    governance_score: 82,
     governance_progress: [
       "Massive state investment in domestic AI hardware and data centers.",
       "Rapidly advancing in domestic chip design to reduce foreign dependency.",
@@ -40,6 +42,7 @@ export const mapData: CountryData[] = [
     lat: 52.2053,
     lng: 0.1218,
     type: "Compute Rich (Research & Policy Hub)",
+    governance_score: 85,
     governance_progress: [
       "Global leader in AI safety policy and research (e.g., UK AI Safety Institute).",
       "Home to world-class AI labs like Google DeepMind.",
@@ -57,6 +60,7 @@ export const mapData: CountryData[] = [
     lat: 3.1390,
     lng: 101.6869,
     type: "Compute South (Aspiring Hub)",
+    governance_score: 62,
     governance_progress: [
       "Strong strategic position in the semiconductor 'back-end' (packaging & testing).",
       "Active government initiatives in AI policy (e.g., MCMC's AI Code of Ethics).",
@@ -74,6 +78,7 @@ export const mapData: CountryData[] = [
     lat: -23.5505,
     lng: -46.6333,
     type: "Compute South (Emerging Power)",
+    governance_score: 58,
     governance_progress: [
       "Developing a national AI strategy focused on ethical use.",
       "Growing tech startup ecosystem, particularly in fintech and agritech.",
@@ -91,6 +96,7 @@ export const mapData: CountryData[] = [
     lat: 6.5244,
     lng: 3.3792,
     type: "Compute Desert (High Potential)",
+    governance_score: 34,
     governance_progress: [
       "Home to Africa's largest and most dynamic tech startup ecosystem.",
       "Growing community of AI/ML engineers and data scientists.",
@@ -108,6 +114,7 @@ export const mapData: CountryData[] = [
     lat: 14.5995,
     lng: 120.9842,
     type: "Compute South (Talent Powerhouse)",
+    governance_score: 45,
     governance_progress: [
       "World-class, English-speaking talent pool for data annotation and AI services.",
       "Strong government support for the Business Process Outsourcing (BPO) sector, which is pivoting to AI.",

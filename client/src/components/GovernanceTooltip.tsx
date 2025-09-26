@@ -7,8 +7,8 @@ interface GovernanceTooltipProps {
 }
 
 export default function GovernanceTooltip({ country, onClose }: GovernanceTooltipProps) {
-  // Calculate progress score based on governance progress items
-  const progressScore = Math.min(100, (country.governance_progress.length / 5) * 100);
+  // Use the actual governance score from data
+  const progressScore = country.governance_score;
   
   const getTypeColor = (type: string) => {
     if (type.includes("Compute Rich")) return "text-compute-rich";

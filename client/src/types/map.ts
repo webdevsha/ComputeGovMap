@@ -3,6 +3,7 @@ export interface CountryData {
   lat: number;
   lng: number;
   type: "Compute Rich (Frontier)" | "Compute Rich (State-Driven)" | "Compute Rich (Research & Policy Hub)" | "Compute South (Aspiring Hub)" | "Compute South (Emerging Power)" | "Compute South (Talent Powerhouse)" | "Compute Desert (High Potential)";
+  governance_score: number; // 0-100 score representing governance maturity
   governance_progress: string[];
   governance_gaps: string[];
   literature_link?: string;
