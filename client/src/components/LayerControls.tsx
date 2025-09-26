@@ -11,9 +11,9 @@ interface LayerControlsProps {
 
 export default function LayerControls({ visibleLayers, onLayerToggle, className = "" }: LayerControlsProps) {
   const layers: { key: ComputeType; label: string; color: string }[] = [
-    { key: "Compute Rich", label: "Compute Rich Nations", color: "bg-compute-rich" },
-    { key: "Compute South", label: "Compute South Regions", color: "bg-compute-south" },
-    { key: "Compute Desert", label: "Compute Desert Areas", color: "bg-compute-desert" }
+    { key: "Compute North", label: "Compute North Nations", color: "bg-blue-500" },
+    { key: "Global South", label: "Global South Regions", color: "bg-yellow-500" },
+    { key: "Compute Desert", label: "Compute Desert Areas", color: "bg-orange-500" }
   ];
 
   return (

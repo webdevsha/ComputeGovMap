@@ -11,16 +11,16 @@ export default function GovernanceTooltip({ country, onClose }: GovernanceToolti
   const progressScore = country.governance_score;
   
   const getTypeColor = (type: string) => {
-    if (type.includes("Compute Rich")) return "text-compute-rich";
-    if (type.includes("Compute South")) return "text-compute-south";
-    if (type.includes("Compute Desert")) return "text-compute-desert";
+    if (type.includes("Compute North")) return "text-blue-500";
+    if (type.includes("Global South")) return "text-yellow-500";
+    if (type.includes("Compute Desert")) return "text-orange-500";
     return "text-muted-foreground";
   };
 
   const getProgressColor = (type: string) => {
-    if (type.includes("Compute Rich")) return "bg-compute-rich";
-    if (type.includes("Compute South")) return "bg-compute-south";
-    if (type.includes("Compute Desert")) return "bg-compute-desert";
+    if (type.includes("Compute North")) return "bg-blue-500";
+    if (type.includes("Global South")) return "bg-yellow-500";
+    if (type.includes("Compute Desert")) return "bg-orange-500";
     return "bg-progress-fill";
   };
 

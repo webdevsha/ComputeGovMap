@@ -2,7 +2,7 @@ export interface CountryData {
   name: string;
   lat: number;
   lng: number;
-  type: "Compute Rich (Frontier)" | "Compute Rich (State-Driven)" | "Compute Rich (Research & Policy Hub)" | "Compute South (Aspiring Hub)" | "Compute South (Emerging Power)" | "Compute South (Talent Powerhouse)" | "Compute Desert (High Potential)";
+  type: string;
   governance_score: number; // 0-100 score representing governance maturity
   governance_progress: string[];
   governance_gaps: string[];
@@ -26,4 +26,4 @@ export interface GeoJSONData {
   features: RegionData[];
 }
 
-export type ComputeType = "Compute Rich" | "Compute South" | "Compute Desert";
+export type ComputeType = "Compute North" | "Global South" | "Compute Desert";

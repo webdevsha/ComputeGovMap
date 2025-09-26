@@ -8,39 +8,26 @@ interface MapLegendProps {
 export default function MapLegend({ className = "" }: MapLegendProps) {
   const legendItems = [
     {
-      label: "Compute Rich",
-      description: "Nations with advanced AI infrastructure",
-      color: "bg-compute-rich",
-      count: 3
+      label: "Compute North",
+      description: "Advanced AI infrastructure and frontier capabilities",
+      color: "bg-blue-500",
+      count: 2
     },
     {
-      label: "Compute South", 
-      description: "Growing economies with limited frontier access",
-      color: "bg-compute-south",
-      count: 3
+      label: "Global South", 
+      description: "Growing economies with emerging AI capabilities",
+      color: "bg-yellow-500",
+      count: 2
     },
     {
       label: "Compute Desert",
       description: "High potential but lacking infrastructure",
-      color: "bg-compute-desert", 
-      count: 1
+      color: "bg-orange-500", 
+      count: 2
     }
   ];
 
-  const regionItems = [
-    {
-      label: "The Compute South",
-      description: "Battleground for digital sovereignty",
-      color: "border-l-4 border-amber-500",
-      pattern: "Yellow overlay"
-    },
-    {
-      label: "The Compute Desert", 
-      description: "Critical infrastructure gaps",
-      color: "border-l-4 border-orange-600",
-      pattern: "Orange overlay"
-    }
-  ];
+  // Regional overlays removed - now using country-specific boundary shading
 
   return (
     <Card className={`w-72 md:w-80 ${className}`} data-testid="card-legend">
@@ -73,23 +60,14 @@ export default function MapLegend({ className = "" }: MapLegendProps) {
           </div>
         </div>
 
-        {/* Regional Overlays */}
+        {/* Country Boundary Shading */}
         <div>
-          <h4 className="text-sm font-medium text-card-foreground mb-3" data-testid="text-regions-title">
-            Regional Classifications
+          <h4 className="text-sm font-medium text-card-foreground mb-3" data-testid="text-boundaries-title">
+            Country Shading
           </h4>
-          <div className="space-y-3">
-            {regionItems.map((item, index) => (
-              <div key={index} className="flex items-start gap-3" data-testid={`legend-region-${index}`}>
-                <div className={`w-4 h-8 ${item.color} flex-shrink-0 rounded-sm`} />
-                <div className="flex-1 min-w-0">
-                  <span className="text-sm font-medium text-card-foreground block">{item.label}</span>
-                  <p className="text-xs text-muted-foreground">{item.description}</p>
-                  <span className="text-xs text-muted-foreground/75 italic">{item.pattern}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+          <p className="text-xs text-muted-foreground mb-3">
+            Countries are shaded according to their compute category with proper boundary lines.
+          </p>
         </div>
 
         {/* Interaction Hint */}

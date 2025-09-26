@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CountryData, ComputeType } from "../types/map";
-import { mapData, geojsonData } from "../data/mapData";
+import { mapData } from "../data/mapData";
+import { countryBoundaries } from "../data/countryBoundaries";
 import GovernanceTooltip from "./GovernanceTooltip";
 
 // Declare Leaflet types for TypeScript
@@ -60,32 +61,7 @@ export default function InteractiveMap({
       onMapReady(map);
     }
 
-    // Add regional overlays
-    geojsonData.features.forEach((feature) => {
-      const overlay = window.L.geoJSON(feature, {
-        style: {
-          fillColor: feature.properties.name === "The Compute South" ? "#fbbf24" : "#ea580c", // yellow vs orange
-          weight: 1,
-          opacity: 0.7,
-          color: feature.properties.name === "The Compute South" ? "#f59e0b" : "#dc2626",
-          fillOpacity: 0.3
-        },
-        onEachFeature: (feature: any, layer: any) => {
-          layer.on('click', () => {
-            console.log(`Clicked on ${feature.properties.name}`);
-            layer.bindPopup(`
-              <div class="p-3">
-                <h3 class="font-semibold text-lg mb-2">${feature.properties.name}</h3>
-                <p class="text-sm text-gray-600">${feature.properties.description}</p>
-              </div>
-            `).openPopup();
-          });
-        }
-      });
-      
-      overlay.addTo(map);
-      overlaysRef.current.push(overlay);
-    });
+    // Country boundaries will be added in the markers update effect
 
     return () => {
       if (mapInstanceRef.current) {
@@ -99,19 +75,51 @@ export default function InteractiveMap({
   useEffect(() => {
     if (!mapInstanceRef.current || !window.L) return;
 
-    // Clear existing markers
+    // Clear existing markers and overlays
     markersRef.current.forEach(marker => {
       mapInstanceRef.current.removeLayer(marker);
     });
     markersRef.current = [];
+    
+    overlaysRef.current.forEach(overlay => {
+      mapInstanceRef.current.removeLayer(overlay);
+    });
+    overlaysRef.current = [];
+
+    // Add country boundary shading for filtered countries
+    filteredCountries.forEach((country) => {
+      const boundary = countryBoundaries[country.name as keyof typeof countryBoundaries];
+      if (boundary) {
+        const getCountryColor = (type: string) => {
+          if (type.includes("Compute North")) return "#3b82f6"; // blue
+          if (type.includes("Global South")) return "#fbbf24"; // yellow  
+          if (type.includes("Compute Desert")) return "#ea580c"; // orange
+          return "#6b7280"; // gray fallback
+        };
+
+        const overlay = window.L.geoJSON(boundary, {
+          style: {
+            fillColor: getCountryColor(country.type),
+            weight: 2,
+            opacity: 0.8,
+            color: "#374151",
+            fillOpacity: 0.4
+          }
+        });
+        
+        overlay.addTo(mapInstanceRef.current);
+        overlaysRef.current.push(overlay);
+      }
+    });
 
     // Add markers for filtered countries
     filteredCountries.forEach((country) => {
 
       const getMarkerColor = (type: string) => {
-        if (type.includes("Compute Rich")) return "#f59e0b"; // amber
-        if (type.includes("Compute South")) return "#06b6d4"; // cyan
-        return "#ea580c"; // orange-red
+        if (type.includes("Compute North")) return "#3b82f6"; // blue
+        if (type.includes("Global South")) return "#fbbf24"; // yellow
+        if (type.includes("Compute Desert")) return "#ea580c"; // orange
+        return "#6b7280"; // gray fallback
       };
 
       const marker = window.L.circleMarker([country.lat, country.lng], {

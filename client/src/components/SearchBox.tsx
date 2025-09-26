@@ -39,9 +39,9 @@ export default function SearchBox({ countries, onCountrySelect, className = "" }
   };
 
   const getTypeColor = (type: string) => {
-    if (type.includes("Compute Rich")) return "text-compute-rich";
-    if (type.includes("Compute South")) return "text-compute-south";
-    if (type.includes("Compute Desert")) return "text-compute-desert";
+    if (type.includes("Compute North")) return "text-blue-500";
+    if (type.includes("Global South")) return "text-yellow-500";
+    if (type.includes("Compute Desert")) return "text-orange-500";
     return "text-muted-foreground";
   };
 

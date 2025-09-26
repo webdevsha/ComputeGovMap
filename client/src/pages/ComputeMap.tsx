@@ -11,8 +11,8 @@ import DataExport from "../components/DataExport";
 
 export default function ComputeMap() {
   const [visibleLayers, setVisibleLayers] = useState<Record<ComputeType, boolean>>({
-    "Compute Rich": true,
-    "Compute South": true,
+    "Compute North": true,
+    "Global South": true,
     "Compute Desert": true
   });
   const [scoreRange, setScoreRange] = useState<[number, number]>([0, 100]);
@@ -22,8 +22,8 @@ export default function ComputeMap() {
   // Filter countries based on governance score range and visible layers
   const filteredCountries = useMemo(() => {
     return mapData.filter(country => {
-      const computeType = country.type.includes("Compute Rich") ? "Compute Rich" : 
-                         country.type.includes("Compute South") ? "Compute South" : "Compute Desert";
+      const computeType = country.type.includes("Compute North") ? "Compute North" : 
+                         country.type.includes("Global South") ? "Global South" : "Compute Desert";
       
       const isLayerVisible = visibleLayers[computeType];
       const isInScoreRange = country.governance_score >= scoreRange[0] && country.governance_score <= scoreRange[1];
@@ -102,8 +102,8 @@ export default function ComputeMap() {
               countries={filteredCountries}
               allCountries={mapData}
               visibleCountries={mapData.filter(country => {
-                const computeType = country.type.includes("Compute Rich") ? "Compute Rich" : 
-                                 country.type.includes("Compute South") ? "Compute South" : "Compute Desert";
+                const computeType = country.type.includes("Compute North") ? "Compute North" : 
+                                 country.type.includes("Global South") ? "Global South" : "Compute Desert";
                 return visibleLayers[computeType];
               })}
               className="flex-shrink-0 pointer-events-auto"
@@ -118,8 +118,8 @@ export default function ComputeMap() {
             countries={filteredCountries}
             allCountries={mapData}
             visibleCountries={mapData.filter(country => {
-              const computeType = country.type.includes("Compute Rich") ? "Compute Rich" : 
-                               country.type.includes("Compute South") ? "Compute South" : "Compute Desert";
+              const computeType = country.type.includes("Compute North") ? "Compute North" : 
+                               country.type.includes("Global South") ? "Global South" : "Compute Desert";
               return visibleLayers[computeType];
             })}
           />
