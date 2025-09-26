@@ -12,15 +12,28 @@ declare global {
 
 interface InteractiveMapProps {
   visibleLayers: Record<ComputeType, boolean>;
+  filteredCountries?: CountryData[];
+  selectedCountry?: CountryData | null;
+  onCountrySelect?: (country: CountryData | null) => void;
+  onMapReady?: (map: any) => void;
   className?: string;
 }
 
-export default function InteractiveMap({ visibleLayers, className = "" }: InteractiveMapProps) {
+export default function InteractiveMap({ 
+  visibleLayers, 
+  filteredCountries = mapData,
+  selectedCountry: externalSelectedCountry = null,
+  onCountrySelect,
+  onMapReady,
+  className = "" 
+}: InteractiveMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
   const overlaysRef = useRef<any[]>([]);
-  const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(null);
+  const [internalSelectedCountry, setInternalSelectedCountry] = useState<CountryData | null>(null);
+  
+  const selectedCountry = externalSelectedCountry || internalSelectedCountry;
 
   // Initialize map
   useEffect(() => {
@@ -41,6 +54,11 @@ export default function InteractiveMap({ visibleLayers, className = "" }: Intera
     }).addTo(map);
 
     mapInstanceRef.current = map;
+    
+    // Notify parent component that map is ready
+    if (onMapReady) {
+      onMapReady(map);
+    }
 
     // Add regional overlays
     geojsonData.features.forEach((feature) => {
@@ -87,12 +105,8 @@ export default function InteractiveMap({ visibleLayers, className = "" }: Intera
     });
     markersRef.current = [];
 
-    // Add markers for visible countries
-    mapData.forEach((country) => {
-      const computeType = country.type.includes("Compute Rich") ? "Compute Rich" : 
-                         country.type.includes("Compute South") ? "Compute South" : "Compute Desert";
-      
-      if (!visibleLayers[computeType]) return;
+    // Add markers for filtered countries
+    filteredCountries.forEach((country) => {
 
       const getMarkerColor = (type: string) => {
         if (type.includes("Compute Rich")) return "#f59e0b"; // amber
@@ -122,13 +136,17 @@ export default function InteractiveMap({ visibleLayers, className = "" }: Intera
 
       // Add click event to show tooltip
       marker.on('click', () => {
-        setSelectedCountry(country);
+        if (onCountrySelect) {
+          onCountrySelect(country);
+        } else {
+          setInternalSelectedCountry(country);
+        }
       });
 
       marker.addTo(mapInstanceRef.current);
       markersRef.current.push(marker);
     });
-  }, [visibleLayers]);
+  }, [filteredCountries]);
 
   return (
     <div className={`relative ${className}`} data-testid="container-interactive-map">
@@ -142,7 +160,13 @@ export default function InteractiveMap({ visibleLayers, className = "" }: Intera
       {selectedCountry && (
         <GovernanceTooltip
           country={selectedCountry}
-          onClose={() => setSelectedCountry(null)}
+          onClose={() => {
+            if (onCountrySelect) {
+              onCountrySelect(null);
+            } else {
+              setInternalSelectedCountry(null);
+            }
+          }}
         />
       )}
     </div>
