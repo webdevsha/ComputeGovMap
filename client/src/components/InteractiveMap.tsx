@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { CountryData, ComputeType } from "../types/map";
 import { mapData } from "../data/mapData";
 import worldCountries from "../data/world-countries.json";
+import { aseanGovernanceData, aseanCountryMapping } from "../data/aseanGovernance";
 import GovernanceTooltip from "./GovernanceTooltip";
 
 interface InteractiveMapProps {
@@ -13,6 +14,7 @@ interface InteractiveMapProps {
   onCountrySelect?: (country: CountryData | null) => void;
   onMapReady?: (map: any) => void;
   className?: string;
+  showHeatmap?: boolean;
 }
 
 export default function InteractiveMap({ 
@@ -21,12 +23,14 @@ export default function InteractiveMap({
   selectedCountry: externalSelectedCountry = null,
   onCountrySelect,
   onMapReady,
-  className = "" 
+  className = "",
+  showHeatmap = false
 }: InteractiveMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
   const overlaysRef = useRef<any[]>([]);
+  const heatmapRef = useRef<any[]>([]);
   const [internalSelectedCountry, setInternalSelectedCountry] = useState<CountryData | null>(null);
   
   const selectedCountry = externalSelectedCountry || internalSelectedCountry;
