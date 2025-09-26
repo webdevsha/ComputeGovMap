@@ -69,7 +69,7 @@ export default function ComputeMap() {
         />
         
         {/* Search Box - Top Center on Desktop, Top on Mobile */}
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20 w-80 max-w-[calc(100vw-2rem)] px-2 md:px-0" data-testid="container-search">
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 w-80 max-w-[calc(100vw-2rem)] px-2 md:px-0" data-testid="container-search">
           <SearchBox 
             countries={mapData}
             onCountrySelect={handleCountrySelect}
@@ -77,7 +77,7 @@ export default function ComputeMap() {
         </div>
         
         {/* Layer Controls - Top Left on Desktop, Bottom Left on Mobile */}
-        <div className="absolute top-4 left-4 z-20 space-y-4 md:space-y-4 md:block hidden" data-testid="container-controls-desktop">
+        <div className="absolute top-4 left-4 z-10 space-y-4 md:space-y-4 md:block hidden" data-testid="container-controls-desktop">
           <LayerControls 
             visibleLayers={visibleLayers}
             onLayerToggle={handleLayerToggle}
@@ -93,7 +93,7 @@ export default function ComputeMap() {
         </div>
         
         {/* Mobile Controls - Bottom */}
-        <div className="absolute bottom-4 left-4 right-4 z-20 md:hidden flex flex-col space-y-2 pointer-events-none pb-safe" data-testid="container-controls-mobile">
+        <div className="absolute bottom-4 left-4 right-4 z-10 md:hidden flex flex-col space-y-2 pointer-events-none pb-safe" data-testid="container-controls-mobile">
           <div className="flex gap-2 overflow-x-auto pointer-events-auto">
             <LayerControls 
               visibleLayers={visibleLayers}
@@ -124,7 +124,7 @@ export default function ComputeMap() {
         </div>
         
         {/* Legend - Top Right on Desktop, Hidden on Mobile */}
-        <div className="absolute top-4 right-4 z-20 hidden md:block space-y-4" data-testid="container-legend">
+        <div className="absolute top-4 right-4 z-10 hidden md:block space-y-4" data-testid="container-legend">
           <MapLegend />
           <DataExport 
             countries={filteredCountries}
