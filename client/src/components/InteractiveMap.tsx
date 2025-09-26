@@ -1,15 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import { CountryData, ComputeType } from "../types/map";
 import { mapData } from "../data/mapData";
-import { countryBoundaries } from "../data/countryBoundaries";
+import worldCountries from "../data/world-countries.json";
 import GovernanceTooltip from "./GovernanceTooltip";
-
-// Declare Leaflet types for TypeScript
-declare global {
-  interface Window {
-    L: any;
-  }
-}
 
 interface InteractiveMapProps {
   visibleLayers: Record<ComputeType, boolean>;
@@ -38,10 +33,10 @@ export default function InteractiveMap({
 
   // Initialize map
   useEffect(() => {
-    if (!mapRef.current || !window.L) return;
+    if (!mapRef.current) return;
 
     // Create map centered on Southeast Asia
-    const map = window.L.map(mapRef.current, {
+    const map = L.map(mapRef.current, {
       center: [10, 100], // Southeast Asia
       zoom: 4,
       zoomControl: true,
@@ -49,7 +44,7 @@ export default function InteractiveMap({
     });
 
     // Add CartoDB light tile layer
-    window.L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>',
       maxZoom: 18
     }).addTo(map);
@@ -73,7 +68,7 @@ export default function InteractiveMap({
 
   // Update markers based on visible layers
   useEffect(() => {
-    if (!mapInstanceRef.current || !window.L) return;
+    if (!mapInstanceRef.current) return;
 
     // Clear existing markers and overlays
     markersRef.current.forEach(marker => {
@@ -86,10 +81,24 @@ export default function InteractiveMap({
     });
     overlaysRef.current = [];
 
-    // Add country boundary shading for filtered countries
+    // Add country boundary shading for filtered countries using proper GeoJSON data
     filteredCountries.forEach((country) => {
-      const boundary = countryBoundaries[country.name as keyof typeof countryBoundaries];
-      if (boundary) {
+      // Map country names to GeoJSON feature IDs/names
+      const countryNameMapping: Record<string, string> = {
+        "United States": "USA",
+        "China": "CHN", 
+        "Malaysia": "MYS",
+        "India": "IND",
+        "Philippines": "PHL",
+        "Nigeria": "NGA"
+      };
+
+      const countryId = countryNameMapping[country.name];
+      const geoJsonFeature = worldCountries.features.find(
+        (feature: any) => feature.id === countryId || feature.properties.name === country.name
+      );
+
+      if (geoJsonFeature) {
         const getCountryColor = (type: string) => {
           if (type.includes("Compute North")) return "#3b82f6"; // blue
           if (type.includes("Global South")) return "#fbbf24"; // yellow  
@@ -97,7 +106,7 @@ export default function InteractiveMap({
           return "#6b7280"; // gray fallback
         };
 
-        const overlay = window.L.geoJSON(boundary, {
+        const overlay = L.geoJSON(geoJsonFeature, {
           style: {
             fillColor: getCountryColor(country.type),
             weight: 2,
@@ -122,7 +131,7 @@ export default function InteractiveMap({
         return "#6b7280"; // gray fallback
       };
 
-      const marker = window.L.circleMarker([country.lat, country.lng], {
+      const marker = L.circleMarker([country.lat, country.lng], {
         radius: 8,
         fillColor: getMarkerColor(country.type),
         color: "#ffffff",
