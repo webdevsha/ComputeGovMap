@@ -1,0 +1,47 @@
+Prompt 1: The Basic World Map
+"Let's build an interactive world map using HTML, CSS, and JavaScript. Please use the Leaflet.js library for the map.
+
+Create a simple index.html file that links to a style.css and a script.js file. The map should fill the entire browser window. Center the initial view on Southeast Asia and set a gentle, light-colored map tile layer, like one from CartoDB or Stamen."
+
+Prompt 2: Plotting the "Compute Rich"
+"Now, let's plot the GPU locations from the image as dots on the map. In the script.js file, create a placeholder JavaScript array with the approximate latitude and longitude for about 10-15 of the locations shown in the image.
+
+Use the legend from the image: make the H100 dots dark purple, the A100 dots light blue, and the V100 dots orange-red. Add these dots to the map as circle markers."
+
+Prompt 3: Adding Pop-up Information
+"Let's make the dots interactive. When a user clicks on one of the GPU location dots, it should open a pop-up.
+
+The pop-up should display simple information like:
+
+GPU Type: 'NVIDIA H100'
+
+Status: 'Compute Rich'
+
+Location: 'City, Country'
+
+Please add this functionality to the circle markers we created in the previous step."
+
+Prompt 4: Visualizing the "Compute South" & "Compute Desert"
+"This is the most important step. Let's add shaded regions to the map to represent the 'Compute South' and 'Compute Desert.'
+
+Using the GeoJSON format, create two large, semi-transparent colored overlays on the map:
+
+A yellow overlay covering the approximate regions of the 'Compute South' (e.g., Southeast Asia, South America, Africa).
+
+A slightly darker orange overlay covering a region that represents a 'Compute Desert' (e.g., a large part of Central Africa).
+
+When a user clicks on these shaded regions, show a pop-up with a title like 'The Compute South' and a short, one-sentence definition."
+
+Prompt 5: Creating the Legend and Controls
+"Now, let's add a legend and some simple controls to make the map easy to understand.
+
+In the top-right corner, create a legend that clearly explains what the dot colors and the shaded regions mean.
+
+Also, add a layer control box in the top-left that allows the user to toggle the H100, A100, and V100 dot layers on and off. This will help users see the distribution of different generations of compute."
+
+Prompt 6: Adding a Simple Narrative Element
+"Finally, let's add a simple title and a one-sentence introduction to frame the story for the user.
+
+At the top of the page, outside the map, add a main title: 'The Unseen Empire: Mapping the Global Compute Landscape.'
+
+Below the title, add a subtitle: 'This map reveals the stark divide between the "Compute Rich" nations and the emerging "Compute South," highlighting a critical challenge for global AI governance.'"
