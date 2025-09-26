@@ -26,8 +26,9 @@ export default function GovernanceTooltip({ country, onClose }: GovernanceToolti
 
   return (
     <div 
-      className="fixed z-50 max-w-80 bg-card border border-card-border rounded-lg shadow-lg p-6"
+      className="fixed max-w-80 bg-card border border-card-border rounded-lg shadow-lg p-6"
       style={{
+        zIndex: 9999,
         left: '50%',
         top: '50%',
         transform: 'translate(-50%, -50%)'
