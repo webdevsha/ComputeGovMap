@@ -14,6 +14,7 @@ interface SearchBoxProps {
 export default function SearchBox({ countries, onCountrySelect, className = "" }: SearchBoxProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const filteredCountries = useMemo(() => {
     if (!searchTerm.trim()) return [];
@@ -30,6 +31,7 @@ export default function SearchBox({ countries, onCountrySelect, className = "" }
     onCountrySelect(country);
     setSearchTerm("");
     setIsOpen(false);
+    setIsFocused(false);
   };
 
   const getGovernanceBand = (score: number) => {
@@ -45,8 +47,11 @@ export default function SearchBox({ countries, onCountrySelect, className = "" }
     return "text-muted-foreground";
   };
 
+  // Only show search box when focused or has content
+  const shouldShowSearchBox = isFocused || searchTerm.trim().length > 0;
+
   return (
-    <div className={`relative ${className}`} data-testid="container-search">
+    <div className={`relative transition-all duration-300 ${shouldShowSearchBox ? 'opacity-100' : 'opacity-30 hover:opacity-100'} ${className}`} data-testid="container-search">
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
         <Input
@@ -57,8 +62,16 @@ export default function SearchBox({ countries, onCountrySelect, className = "" }
             setSearchTerm(e.target.value);
             setIsOpen(e.target.value.trim().length > 0);
           }}
-          onFocus={() => setIsOpen(searchTerm.trim().length > 0)}
-          onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+          onFocus={() => {
+            setIsFocused(true);
+            setIsOpen(searchTerm.trim().length > 0);
+          }}
+          onBlur={() => {
+            setTimeout(() => {
+              setIsOpen(false);
+              setIsFocused(false);
+            }, 200);
+          }}
           className="pl-10 pr-4"
           data-testid="input-search"
         />
