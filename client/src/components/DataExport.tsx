@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Download, FileText, Database, BarChart3 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import CollapsibleCard from "@/components/ui/collapsible-card";
 import { CountryData } from "@/types/map";
 
 interface DataExportProps {
@@ -200,14 +200,13 @@ export default function DataExport({
   };
 
   return (
-    <Card className={`w-72 md:w-80 ${className}`} data-testid="card-data-export">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-lg font-semibold flex items-center gap-2" data-testid="text-export-title">
-          <Download className="w-4 h-4" />
-          Export Data
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <CollapsibleCard
+      title="Export Data"
+      className={`w-72 md:w-80 ${className}`}
+      testId="card-data-export"
+      defaultOpen={false}
+    >
+      <div className="space-y-4">
         {/* Export Format */}
         <div className="space-y-2">
           <label className="text-sm font-medium" data-testid="label-export-format">
@@ -296,7 +295,7 @@ export default function DataExport({
             </>
           )}
         </Button>
-      </CardContent>
-    </Card>
+      </div>
+    </CollapsibleCard>
   );
 }

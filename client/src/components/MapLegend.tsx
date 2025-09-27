@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import CollapsibleCard from "@/components/ui/collapsible-card";
 
 interface MapLegendProps {
   className?: string;
@@ -30,13 +30,13 @@ export default function MapLegend({ className = "" }: MapLegendProps) {
   // Regional overlays removed - now using country-specific boundary shading
 
   return (
-    <Card className={`w-72 md:w-80 ${className}`} data-testid="card-legend">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-lg font-semibold" data-testid="text-legend-title">
-          Global Compute Landscape
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <CollapsibleCard
+      title="Global Compute Landscape"
+      className={`w-72 md:w-80 ${className}`}
+      testId="card-legend"
+      defaultOpen={true}
+    >
+      <div className="space-y-4">
         {/* Country Markers */}
         <div>
           <h4 className="text-sm font-medium text-card-foreground mb-3" data-testid="text-markers-title">
@@ -76,7 +76,7 @@ export default function MapLegend({ className = "" }: MapLegendProps) {
             Hover over markers for detailed governance analysis
           </p>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </CollapsibleCard>
   );
 }

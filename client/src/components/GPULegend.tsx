@@ -1,4 +1,5 @@
 import { Info } from "lucide-react";
+import CollapsibleCard from "@/components/ui/collapsible-card";
 
 interface GPULegendProps {
   className?: string;
@@ -6,14 +7,12 @@ interface GPULegendProps {
 
 export default function GPULegend({ className = "" }: GPULegendProps) {
   return (
-    <div className={`bg-card border border-card-border rounded-lg shadow-lg p-4 ${className}`}>
-      <div className="flex items-center gap-2 mb-3">
-        <Info className="w-4 h-4 text-muted-foreground" />
-        <h3 className="text-sm font-semibold text-card-foreground">
-          GPU Infrastructure Legend
-        </h3>
-      </div>
-      
+    <CollapsibleCard
+      title="GPU Infrastructure Legend"
+      className={className}
+      testId="gpu-legend"
+      defaultOpen={true}
+    >
       <div className="space-y-3">
         <div className="flex items-center gap-3">
           <div 
@@ -48,33 +47,36 @@ export default function GPULegend({ className = "" }: GPULegendProps) {
               <div style={{
                 position: 'absolute',
                 top: '2px',
-                left: '-4px',
-                width: '8px',
-                textAlign: 'center',
+                left: '50%',
+                transform: 'translateX(-50%)',
                 fontSize: '8px',
                 color: 'white',
                 fontWeight: 'bold',
-                lineHeight: '1'
-              }}>1</div>
+                textShadow: '0 1px 2px rgba(0,0,0,0.5)'
+              }}>
+                #
+              </div>
             </div>
           </div>
-          <span className="text-sm text-card-foreground">H100 regions (Frontier AI)</span>
+          <span className="text-sm text-card-foreground">H100 Frontier AI Compute</span>
         </div>
         
-        <div className="flex items-center gap-3">
-          <div className="w-4 h-4 bg-blue-500 border-2 border-white rounded-full shadow-sm"></div>
-          <span className="text-sm text-card-foreground">Country center</span>
+        <div className="pt-2 border-t border-border">
+          <div className="flex items-center gap-2 mb-2">
+            <Info className="w-3 h-3 text-muted-foreground" />
+            <span className="text-xs font-medium text-card-foreground">Distribution Info</span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            H100 triangles show numbered frontier AI compute regions across major tech hubs
+          </p>
+        </div>
+        
+        <div className="text-xs text-muted-foreground space-y-1">
+          <div>• Silicon Valley: 2 H100 regions</div>
+          <div>• Other major hubs: 1 H100 each</div>
+          <div>• Total US H100 regions: 9</div>
         </div>
       </div>
-      
-      <div className="mt-3 pt-3 border-t border-card-border">
-        <p className="text-xs text-muted-foreground mb-1">
-          Numbers indicate region sequence. Hover for details.
-        </p>
-        <p className="text-xs text-red-600 font-medium">
-          🔺 H100 = Most advanced AI compute (Frontier models)
-        </p>
-      </div>
-    </div>
+    </CollapsibleCard>
   );
 }
