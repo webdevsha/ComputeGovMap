@@ -13,6 +13,8 @@ export interface CountryData {
   a100_regions?: number; // Number of A100-enabled regions
   v100_regions?: number; // Number of V100-enabled regions
   total_regions?: number; // Total number of regions
+  osat_regions?: number; // Number of OSAT (Outsourced Semiconductor Assembly and Test) regions
+  osat_info?: string; // Detailed OSAT information
 }
 
 export interface RegionData {

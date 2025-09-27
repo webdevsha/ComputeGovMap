@@ -126,6 +126,29 @@ export default function GovernanceTooltip({ country, onClose }: GovernanceToolti
                 <span className="font-medium text-purple-600">{country.v100_regions}</span>
               </div>
             )}
+            {country.osat_regions !== undefined && country.osat_regions > 0 && (
+              <div className="flex items-center justify-between text-sm" data-testid="osat-regions-info">
+                <span className="text-muted-foreground flex items-center">
+                  <div className="inline-block w-2 h-2 bg-blue-700 border border-white rounded-sm mr-2" />
+                  OSAT regions (Assembly/Test)
+                </span>
+                <span className="font-medium text-blue-700">{country.osat_regions}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* OSAT Information Section */}
+      {country.osat_info && (
+        <div className="mb-6">
+          <h4 className="text-sm font-medium text-card-foreground mb-2" data-testid="text-osat-info-label">
+            🔷 OSAT Operations (Semiconductor Assembly/Test)
+          </h4>
+          <div className="text-xs text-muted-foreground bg-blue-50 p-3 rounded-lg border border-blue-200" data-testid="osat-info-content">
+            <p className="leading-relaxed">
+              {country.osat_info}
+            </p>
           </div>
         </div>
       )}

@@ -264,23 +264,128 @@ export const mapData: CountryData[] = [
     name: "Philippines",
     lat: 12.8797,
     lng: 121.7740,
-    type: "Compute Desert (Service Hub)",
-    governance_score: 45,
-    total_regions: 1,
-    gpu_regions: 0,
-    non_gpu_regions: 1,
+    type: "Compute Desert (Service Hub & OSAT Leader)",
+    governance_score: 52,
+    total_regions: 4,
+    gpu_regions: 1,
+    non_gpu_regions: 3,
     h100_regions: 0,
     a100_regions: 0,
-    v100_regions: 0,
+    v100_regions: 1,
+    osat_regions: 4,
+    osat_info: "About 500 semiconductor/electronics firms operate in the country (semi.org), including subsidiaries of major firms: Amkor, Jabil, Celestica and Texas Instruments have large packaging/test plants, primarily in Laguna and Batangas. Four of the world's top 20 chipmakers (TI, Philips, On Semi, Rohm) have Filipino manufacturing, largely in assembly/test roles (semi.org). The Duterte and Marcos administrations have heavily promoted electronics (including semiconductors) through tax-free zones (PEZA/BOI) and the Electronics Industry Roadmap (PATHS). OSAT employment is high (tens of thousands) and growing, though exact figures are proprietary. The Philippines' strengths here are its skilled labor, low costs, and English communication. A 2024 OECD report underscores that Philippine chip exports rank 9th globally (oecd.org), driven by these ATS activities.",
     governance_progress: [
       "World-class, English-speaking talent pool for data annotation and AI services.",
       "Strong government support for the Business Process Outsourcing (BPO) sector.",
-      "Growing number of AI-focused startups."
+      "Growing number of AI-focused startups.",
+      "Major OSAT operations with 4 of top 20 global chipmakers having manufacturing presence.",
+      "Ranks 9th globally in chip exports driven by assembly/test activities (OECD 2024).",
+      "About 500 semiconductor/electronics firms with tens of thousands employed in OSAT."
     ],
     governance_gaps: [
-      "Limited physical AI compute infrastructure.",
-      "Value is captured in services, not in owning the core IP or infrastructure.",
-      "Vulnerable to shifts in the global BPO market as AI automates more tasks."
+      "Limited physical AI compute infrastructure for frontier models.",
+      "Value is captured in services and assembly, not in owning the core IP or chip design.",
+      "Vulnerable to shifts in the global BPO market as AI automates more tasks.",
+      "OSAT operations focused on assembly/test rather than advanced chip design.",
+      "Dependency on foreign companies for high-tech manufacturing decisions."
+    ],
+    literature_link: "https://dict.gov.ph/ai-philippines/"
+  },
+  // Philippines OSAT Regions - Major semiconductor assembly/test locations
+  {
+    name: "Philippines - Laguna OSAT Hub",
+    lat: 14.2691,
+    lng: 121.4118,
+    type: "OSAT (Semiconductor Assembly/Test)",
+    governance_score: 52,
+    total_regions: 1,
+    gpu_regions: 0,
+    non_gpu_regions: 1,
+    osat_regions: 1,
+    osat_info: "Major OSAT operations including Amkor and Texas Instruments packaging/test facilities. Key location for semiconductor assembly with skilled workforce and established infrastructure.",
+    governance_progress: [
+      "Home to major OSAT facilities from global semiconductor companies.",
+      "Established semiconductor manufacturing ecosystem.",
+      "Skilled technical workforce for assembly and test operations.",
+      "Government support through PEZA tax-free zones."
+    ],
+    governance_gaps: [
+      "Limited to assembly/test operations rather than chip design.",
+      "Dependency on foreign companies for technology and decisions.",
+      "Need for more advanced semiconductor capabilities."
+    ],
+    literature_link: "https://dict.gov.ph/ai-philippines/"
+  },
+  {
+    name: "Philippines - Batangas OSAT Hub", 
+    lat: 13.7565,
+    lng: 121.0583,
+    type: "OSAT (Semiconductor Assembly/Test)",
+    governance_score: 52,
+    total_regions: 1,
+    gpu_regions: 0,
+    non_gpu_regions: 1,
+    osat_regions: 1,
+    osat_info: "Major semiconductor packaging/test operations including Jabil and Celestica facilities. Strategic location with port access for global semiconductor supply chain.",
+    governance_progress: [
+      "Strategic OSAT hub with major international semiconductor companies.",
+      "Excellent logistics and port connectivity for global supply chain.",
+      "Growing semiconductor assembly capabilities.",
+      "Strong government incentives through BOI programs."
+    ],
+    governance_gaps: [
+      "Focus on lower-value assembly operations.",
+      "Limited local semiconductor design capabilities.", 
+      "Vulnerability to global supply chain disruptions."
+    ],
+    literature_link: "https://dict.gov.ph/ai-philippines/"
+  },
+  {
+    name: "Philippines - Metro Manila OSAT",
+    lat: 14.5995,
+    lng: 120.9842, 
+    type: "OSAT (Semiconductor Assembly/Test)",
+    governance_score: 52,
+    total_regions: 1,
+    gpu_regions: 1,
+    non_gpu_regions: 0,
+    v100_regions: 1,
+    osat_regions: 1,
+    osat_info: "Metro Manila semiconductor operations and headquarters for major OSAT companies. Hub for semiconductor services and emerging AI infrastructure.",
+    governance_progress: [
+      "Corporate headquarters for major OSAT operations.",
+      "Growing AI services and data center infrastructure.",
+      "Skilled workforce in technology and engineering.",
+      "Government support for electronics industry development."
+    ],
+    governance_gaps: [
+      "Limited advanced compute infrastructure.",
+      "Need for more investment in frontier AI capabilities.",
+      "Dependency on imported high-end semiconductors."
+    ],
+    literature_link: "https://dict.gov.ph/ai-philippines/"
+  },
+  {
+    name: "Philippines - Cebu OSAT Operations",
+    lat: 10.3157,
+    lng: 123.8854,
+    type: "OSAT (Semiconductor Assembly/Test)", 
+    governance_score: 52,
+    total_regions: 1,
+    gpu_regions: 0,
+    non_gpu_regions: 1,
+    osat_regions: 1,
+    osat_info: "Emerging OSAT operations in Cebu with focus on electronics assembly and testing. Part of Philippines' distributed semiconductor manufacturing strategy.",
+    governance_progress: [
+      "Expanding OSAT operations beyond Luzon island.",
+      "Growing electronics and semiconductor assembly capabilities.",
+      "Strategic location for regional semiconductor supply chain.",
+      "Skilled local workforce development programs."
+    ],
+    governance_gaps: [
+      "Newer OSAT operations with limited scale compared to Laguna/Batangas.",
+      "Need for more advanced testing and packaging capabilities.",
+      "Infrastructure development still in progress."
     ],
     literature_link: "https://dict.gov.ph/ai-philippines/"
   },

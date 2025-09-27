@@ -357,6 +357,104 @@ export default function InteractiveMap({
             }
           }
         }
+        
+        // Add OSAT region indicators (blue squares) - positioned slightly further out
+        const osatRegions = country.osat_regions || 0;
+        if (osatRegions > 0) {
+          const osatRadius = 0.25; // Positioned between GPU indicators and center
+          
+          // If there's only one OSAT, place it offset from center
+          if (osatRegions === 1) {
+            const osatLat = country.lat + 0.1;
+            const osatLng = country.lng + 0.1;
+            
+            const osatIndicator = L.marker([osatLat, osatLng], {
+              icon: L.divIcon({
+                className: 'osat-indicator',
+                html: `<div style="
+                  width: 14px;
+                  height: 14px;
+                  background-color: #1e40af;
+                  border: 2px solid white;
+                  border-radius: 2px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                  z-index: 1000;
+                ">
+                  <div style="
+                    font-size: 8px;
+                    color: white;
+                    font-weight: bold;
+                    text-align: center;
+                    line-height: 1;
+                  ">1</div>
+                </div>`,
+                iconSize: [18, 18],
+                iconAnchor: [9, 9]
+              })
+            });
+            
+            osatIndicator.bindTooltip(`${country.name}<br/>🔷 OSAT Operations<br/>${country.osat_info?.substring(0, 150)}...`, {
+              direction: 'top',
+              offset: [0, -20],
+              className: 'osat-tooltip'
+            });
+            
+            osatIndicator.addTo(mapInstanceRef.current);
+            markersRef.current.push(osatIndicator);
+          } else {
+            // Multiple OSATs - arrange in circle
+            const osatAngleStep = (2 * Math.PI) / osatRegions;
+            
+            for (let i = 0; i < osatRegions; i++) {
+              const angle = i * osatAngleStep;
+              const lat = country.lat + (osatRadius * Math.cos(angle));
+              const lng = country.lng + (osatRadius * Math.sin(angle));
+              
+              const osatIndicator = L.marker([lat, lng], {
+                icon: L.divIcon({
+                  className: 'osat-indicator',
+                  html: `<div style="
+                    width: 12px;
+                    height: 12px;
+                    background-color: #1e40af;
+                    border: 2px solid white;
+                    border-radius: 2px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                  ">
+                    <div style="
+                      font-size: 7px;
+                      color: white;
+                      font-weight: bold;
+                      text-align: center;
+                      line-height: 1;
+                    ">${i + 1}</div>
+                  </div>`,
+                  iconSize: [16, 16],
+                  iconAnchor: [8, 8]
+                })
+              });
+              
+              const tooltipContent = country.osat_info 
+                ? `OSAT Region ${i + 1}<br/>🔷 Semiconductor Assembly/Test<br/>${country.osat_info.substring(0, 100)}...`
+                : `OSAT Region ${i + 1}<br/>🔷 Semiconductor Assembly/Test Operations`;
+              
+              osatIndicator.bindTooltip(tooltipContent, {
+                direction: 'top',
+                offset: [0, -15],
+                className: 'osat-tooltip'
+              });
+              
+              osatIndicator.addTo(mapInstanceRef.current);
+              markersRef.current.push(osatIndicator);
+            }
+          }
+        }
       }
     });
 
