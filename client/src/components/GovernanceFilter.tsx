@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import CollapsibleCard from "@/components/ui/collapsible-card";
 
 interface GovernanceFilterProps {
   scoreRange: [number, number];
@@ -20,13 +20,13 @@ export default function GovernanceFilter({ scoreRange, onScoreRangeChange, class
   const maxBand = getGovernanceBand(scoreRange[1]);
 
   return (
-    <Card className={`w-56 md:w-64 ${className}`} data-testid="card-governance-filter">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-semibold" data-testid="text-filter-title">
-          Governance Filter
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <CollapsibleCard
+      title="Governance Filter"
+      className={`w-56 md:w-64 ${className}`}
+      testId="card-governance-filter"
+      defaultOpen={true}
+    >
+      <div className="space-y-4">
         <div>
           <Label className="text-sm font-medium mb-3 block" data-testid="label-score-range">
             Governance Score Range
@@ -69,7 +69,7 @@ export default function GovernanceFilter({ scoreRange, onScoreRangeChange, class
             Adjust range to focus on specific governance maturity levels
           </p>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </CollapsibleCard>
   );
 }

@@ -1,7 +1,7 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Activity, Map } from "lucide-react";
+import CollapsibleCard from "@/components/ui/collapsible-card";
 
 interface HeatmapToggleProps {
   showHeatmap: boolean;
@@ -11,13 +11,18 @@ interface HeatmapToggleProps {
 
 export default function HeatmapToggle({ showHeatmap, onToggle, className = "" }: HeatmapToggleProps) {
   return (
-    <Card className={`${className}`} data-testid="card-heatmap-toggle">
-      <CardContent className="p-3">
+    <CollapsibleCard
+      title="ASEAN Governance"
+      className={`${className}`}
+      testId="card-heatmap-toggle"
+      defaultOpen={true}
+    >
+      <div className="space-y-3">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-muted-foreground" />
             <span className="text-sm font-medium text-card-foreground">
-              ASEAN Governance
+              Heatmap View
             </span>
             {showHeatmap && (
               <Badge variant="secondary" className="text-xs">
@@ -38,7 +43,7 @@ export default function HeatmapToggle({ showHeatmap, onToggle, className = "" }:
         </div>
         
         {showHeatmap && (
-          <div className="mt-3 pt-3 border-t border-border">
+          <div className="pt-3 border-t border-border">
             <div className="text-xs text-muted-foreground mb-2">Governance Maturity</div>
             <div className="flex items-center gap-1 text-xs">
               <div className="w-3 h-2 bg-red-600 rounded-sm"></div>
@@ -52,7 +57,7 @@ export default function HeatmapToggle({ showHeatmap, onToggle, className = "" }:
             </div>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </CollapsibleCard>
   );
 }

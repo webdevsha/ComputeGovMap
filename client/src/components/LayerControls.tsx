@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import CollapsibleCard from "@/components/ui/collapsible-card";
 import { ComputeType } from "../types/map";
 
 interface LayerControlsProps {
@@ -17,13 +17,13 @@ export default function LayerControls({ visibleLayers, onLayerToggle, className 
   ];
 
   return (
-    <Card className={`w-56 md:w-64 ${className}`} data-testid="card-layer-controls">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-semibold" data-testid="text-controls-title">
-          Layer Controls
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <CollapsibleCard
+      title="Layer Controls"
+      className={`w-56 md:w-64 ${className}`}
+      testId="card-layer-controls"
+      defaultOpen={true}
+    >
+      <div className="space-y-4">
         {layers.map((layer) => (
           <div key={layer.key} className="flex items-center justify-between" data-testid={`control-layer-${layer.key.toLowerCase().replace(' ', '-')}`}>
             <div className="flex items-center gap-3">
@@ -50,7 +50,7 @@ export default function LayerControls({ visibleLayers, onLayerToggle, className 
             Toggle layers to focus on specific compute categories
           </p>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </CollapsibleCard>
   );
 }
