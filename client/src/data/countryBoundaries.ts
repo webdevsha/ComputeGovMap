@@ -1,17 +1,4 @@
-// Simplified country boundary data for shading
-export const countryBoundaries = {
-  "United States": {
-    type: "Feature",
-    properties: { name: "United States" },
-    geometry: {
-      type: "Polygon",
-      coordinates: [[
-        [-125, 49], [-125, 32], [-117, 32], [-117, 25], [-97, 25], [-97, 49],
-        [-95, 49], [-95, 30], [-84, 30], [-84, 24], [-80, 24], [-80, 32],
-        [-75, 32], [-75, 45], [-69, 45], [-69, 47], [-125, 49]
-      ]]
-    }
-  },
+// Simplified country boundary data for shading\nexport const countryBoundaries = {\n  \"United States\": {\n    type: \"Feature\",\n    properties: { name: \"United States\" },\n    geometry: {\n      type: \"Polygon\",\n      coordinates: [[\n        [-125, 49], [-125, 32], [-117, 32], [-117, 25], [-97, 25], [-97, 49],\n        [-95, 49], [-95, 30], [-84, 30], [-84, 24], [-80, 24], [-80, 32],\n        [-75, 32], [-75, 45], [-69, 45], [-69, 47], [-125, 49]\n      ]]\n    }\n  },\n  \n  // US Regional entries use the same boundary\n  \"United States - Silicon Valley\": {\n    type: \"Feature\",\n    properties: { name: \"United States - Silicon Valley\" },\n    geometry: {\n      type: \"Polygon\",\n      coordinates: [[\n        [-125, 49], [-125, 32], [-117, 32], [-117, 25], [-97, 25], [-97, 49],\n        [-95, 49], [-95, 30], [-84, 30], [-84, 24], [-80, 24], [-80, 32],\n        [-75, 32], [-75, 45], [-69, 45], [-69, 47], [-125, 49]\n      ]]\n    }\n  },\n  \n  \"United States - Seattle\": {\n    type: \"Feature\",\n    properties: { name: \"United States - Seattle\" },\n    geometry: {\n      type: \"Polygon\",\n      coordinates: [[\n        [-125, 49], [-125, 32], [-117, 32], [-117, 25], [-97, 25], [-97, 49],\n        [-95, 49], [-95, 30], [-84, 30], [-84, 24], [-80, 24], [-80, 32],\n        [-75, 32], [-75, 45], [-69, 45], [-69, 47], [-125, 49]\n      ]]\n    }\n  },\n  \n  \"United States - Austin\": {\n    type: \"Feature\",\n    properties: { name: \"United States - Austin\" },\n    geometry: {\n      type: \"Polygon\",\n      coordinates: [[\n        [-125, 49], [-125, 32], [-117, 32], [-117, 25], [-97, 25], [-97, 49],\n        [-95, 49], [-95, 30], [-84, 30], [-84, 24], [-80, 24], [-80, 32],\n        [-75, 32], [-75, 45], [-69, 45], [-69, 47], [-125, 49]\n      ]]\n    }\n  },\n  \n  \"United States - Virginia\": {\n    type: \"Feature\",\n    properties: { name: \"United States - Virginia\" },\n    geometry: {\n      type: \"Polygon\",\n      coordinates: [[\n        [-125, 49], [-125, 32], [-117, 32], [-117, 25], [-97, 25], [-97, 49],\n        [-95, 49], [-95, 30], [-84, 30], [-84, 24], [-80, 24], [-80, 32],\n        [-75, 32], [-75, 45], [-69, 45], [-69, 47], [-125, 49]\n      ]]\n    }\n  },\n  \n  \"United States - New York\": {\n    type: \"Feature\",\n    properties: { name: \"United States - New York\" },\n    geometry: {\n      type: \"Polygon\",\n      coordinates: [[\n        [-125, 49], [-125, 32], [-117, 32], [-117, 25], [-97, 25], [-97, 49],\n        [-95, 49], [-95, 30], [-84, 30], [-84, 24], [-80, 24], [-80, 32],\n        [-75, 32], [-75, 45], [-69, 45], [-69, 47], [-125, 49]\n      ]]\n    }\n  },\n  \n  \"United States - Chicago\": {\n    type: \"Feature\",\n    properties: { name: \"United States - Chicago\" },\n    geometry: {\n      type: \"Polygon\",\n      coordinates: [[\n        [-125, 49], [-125, 32], [-117, 32], [-117, 25], [-97, 25], [-97, 49],\n        [-95, 49], [-95, 30], [-84, 30], [-84, 24], [-80, 24], [-80, 32],\n        [-75, 32], [-75, 45], [-69, 45], [-69, 47], [-125, 49]\n      ]]\n    }\n  },\n  \n  \"United States - Phoenix\": {\n    type: \"Feature\",\n    properties: { name: \"United States - Phoenix\" },\n    geometry: {\n      type: \"Polygon\",\n      coordinates: [[\n        [-125, 49], [-125, 32], [-117, 32], [-117, 25], [-97, 25], [-97, 49],\n        [-95, 49], [-95, 30], [-84, 30], [-84, 24], [-80, 24], [-80, 32],\n        [-75, 32], [-75, 45], [-69, 45], [-69, 47], [-125, 49]\n      ]]\n    }\n  },\n  \n  \"United States - Boston\": {\n    type: \"Feature\",\n    properties: { name: \"United States - Boston\" },\n    geometry: {\n      type: \"Polygon\",\n      coordinates: [[\n        [-125, 49], [-125, 32], [-117, 32], [-117, 25], [-97, 25], [-97, 49],\n        [-95, 49], [-95, 30], [-84, 30], [-84, 24], [-80, 24], [-80, 32],\n        [-75, 32], [-75, 45], [-69, 45], [-69, 47], [-125, 49]\n      ]]\n    }\n  },
   
   "China": {
     type: "Feature", 
@@ -65,6 +52,50 @@ export const countryBoundaries = {
       type: "Polygon",
       coordinates: [[
         [3, 14], [15, 14], [15, 4], [3, 4], [3, 14]
+      ]]
+    }
+  },
+
+  "Indonesia": {
+    type: "Feature",
+    properties: { name: "Indonesia" },
+    geometry: {
+      type: "MultiPolygon",
+      coordinates: [
+        [[[95, 6], [141, 6], [141, -11], [95, -11], [95, 6]]]
+      ]
+    }
+  },
+
+  "Thailand": {
+    type: "Feature",
+    properties: { name: "Thailand" },
+    geometry: {
+      type: "Polygon",
+      coordinates: [[
+        [97, 21], [106, 21], [106, 5], [97, 5], [97, 21]
+      ]]
+    }
+  },
+
+  "Singapore": {
+    type: "Feature",
+    properties: { name: "Singapore" },
+    geometry: {
+      type: "Polygon",
+      coordinates: [[
+        [103.6, 1.5], [104.1, 1.5], [104.1, 1.2], [103.6, 1.2], [103.6, 1.5]
+      ]]
+    }
+  },
+
+  "Netherlands": {
+    type: "Feature",
+    properties: { name: "Netherlands" },
+    geometry: {
+      type: "Polygon",
+      coordinates: [[
+        [3, 54], [7, 54], [7, 51], [3, 51], [3, 54]
       ]]
     }
   }

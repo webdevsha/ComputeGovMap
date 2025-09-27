@@ -9,6 +9,7 @@ import SearchBox from "../components/SearchBox";
 import GovernanceFilter from "../components/GovernanceFilter";
 import DataExport from "../components/DataExport";
 import HeatmapToggle from "../components/HeatmapToggle";
+import GPULegend from "../components/GPULegend";
 
 export default function ComputeMap() {
   const [visibleLayers, setVisibleLayers] = useState<Record<ComputeType, boolean>>({
@@ -126,6 +127,7 @@ export default function ComputeMap() {
         {/* Legend - Top Right on Desktop, Hidden on Mobile */}
         <div className="absolute top-4 right-4 z-10 hidden md:block space-y-4" data-testid="container-legend">
           <MapLegend />
+          <GPULegend />
           <DataExport 
             countries={filteredCountries}
             allCountries={mapData}

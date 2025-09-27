@@ -7,6 +7,12 @@ export interface CountryData {
   governance_progress: string[];
   governance_gaps: string[];
   literature_link?: string;
+  gpu_regions?: number; // Number of GPU-enabled regions
+  non_gpu_regions?: number; // Number of non-GPU regions
+  h100_regions?: number; // Number of H100-enabled regions
+  a100_regions?: number; // Number of A100-enabled regions
+  v100_regions?: number; // Number of V100-enabled regions
+  total_regions?: number; // Total number of regions
 }
 
 export interface RegionData {

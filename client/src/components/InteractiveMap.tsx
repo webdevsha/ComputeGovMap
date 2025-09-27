@@ -90,11 +90,23 @@ export default function InteractiveMap({
       // Map country names to GeoJSON feature IDs/names
       const countryNameMapping: Record<string, string> = {
         "United States": "USA",
+        "United States - Silicon Valley": "USA",
+        "United States - Seattle": "USA",
+        "United States - Austin": "USA",
+        "United States - Virginia": "USA",
+        "United States - New York": "USA",
+        "United States - Chicago": "USA",
+        "United States - Phoenix": "USA",
+        "United States - Boston": "USA",
         "China": "CHN", 
         "Malaysia": "MYS",
         "India": "IND",
         "Philippines": "PHL",
-        "Nigeria": "NGA"
+        "Nigeria": "NGA",
+        "Indonesia": "IDN",
+        "Thailand": "THA",
+        "Singapore": "SGP",
+        "Netherlands": "NLD"
       };
 
       const countryId = countryNameMapping[country.name];
@@ -166,6 +178,186 @@ export default function InteractiveMap({
 
       marker.addTo(mapInstanceRef.current);
       markersRef.current.push(marker);
+      
+      // Add GPU region indicators around the main marker
+      if (country.gpu_regions !== undefined || country.non_gpu_regions !== undefined) {
+        const gpuRegions = country.gpu_regions || 0;
+        const nonGpuRegions = country.non_gpu_regions || 0;
+        const totalRegions = gpuRegions + nonGpuRegions;
+        
+        // Create a circle of indicators around the main marker
+        const radius = 0.3; // Distance from center
+        const angleStep = (2 * Math.PI) / Math.max(totalRegions, 1);
+        
+        // Add GPU-enabled region indicators (green squares)
+        for (let i = 0; i < gpuRegions; i++) {
+          const angle = i * angleStep;
+          const lat = country.lat + (radius * Math.cos(angle));
+          const lng = country.lng + (radius * Math.sin(angle));
+          
+          const gpuIndicator = L.marker([lat, lng], {
+            icon: L.divIcon({
+              className: 'gpu-indicator',
+              html: `<div style="
+                width: 12px;
+                height: 12px;
+                background: #10b981;
+                border: 2px solid #ffffff;
+                border-radius: 2px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 8px;
+                color: white;
+                font-weight: bold;
+              ">${i + 1}</div>`,
+              iconSize: [16, 16],
+              iconAnchor: [8, 8]
+            })
+          });
+          
+          gpuIndicator.bindTooltip(`GPU Region ${i + 1}`, {
+            direction: 'top',
+            offset: [0, -10]
+          });
+          
+          gpuIndicator.addTo(mapInstanceRef.current);
+          markersRef.current.push(gpuIndicator);
+        }
+        
+        // Add non-GPU region indicators (gray squares)
+        for (let i = 0; i < nonGpuRegions; i++) {
+          const angle = (gpuRegions + i) * angleStep;
+          const lat = country.lat + (radius * Math.cos(angle));
+          const lng = country.lng + (radius * Math.sin(angle));
+          
+          const nonGpuIndicator = L.marker([lat, lng], {
+            icon: L.divIcon({
+              className: 'non-gpu-indicator',
+              html: `<div style="
+                width: 12px;
+                height: 12px;
+                background: #6b7280;
+                border: 2px solid #ffffff;
+                border-radius: 2px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 8px;
+                color: white;
+                font-weight: bold;
+              ">${gpuRegions + i + 1}</div>`,
+              iconSize: [16, 16],
+              iconAnchor: [8, 8]
+            })
+          });
+          
+          nonGpuIndicator.bindTooltip(`Non-GPU Region ${gpuRegions + i + 1}`, {
+            direction: 'top',
+            offset: [0, -10]
+          });
+          
+          nonGpuIndicator.addTo(mapInstanceRef.current);
+          markersRef.current.push(nonGpuIndicator);
+        }
+        
+        // Add H100 region indicators (red triangles) - positioned in inner circle
+        const h100Regions = country.h100_regions || 0;
+        if (h100Regions > 0) {
+          // For countries with H100, show triangles closer to the center
+          const innerRadius = 0.15; // Closer to center for H100s
+          
+          // If there's only one H100, place it directly on the country center
+          if (h100Regions === 1) {
+            const h100Indicator = L.marker([country.lat, country.lng], {
+              icon: L.divIcon({
+                className: 'h100-indicator',
+                html: `<div style="
+                  width: 0;
+                  height: 0;
+                  border-left: 10px solid transparent;
+                  border-right: 10px solid transparent;
+                  border-bottom: 16px solid #dc2626;
+                  position: relative;
+                  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+                  z-index: 1000;
+                ">
+                  <div style="
+                    position: absolute;
+                    top: 3px;
+                    left: -5px;
+                    width: 10px;
+                    text-align: center;
+                    font-size: 9px;
+                    color: white;
+                    font-weight: bold;
+                    line-height: 1;
+                  ">H100</div>
+                </div>`,
+                iconSize: [20, 20],
+                iconAnchor: [10, 16]
+              })
+            });
+            
+            h100Indicator.bindTooltip(`${country.name}<br/>🔺 H100 Frontier AI Compute`, {
+              direction: 'top',
+              offset: [0, -20],
+              className: 'h100-tooltip'
+            });
+            
+            h100Indicator.addTo(mapInstanceRef.current);
+            markersRef.current.push(h100Indicator);
+          } else {
+            // Multiple H100s - arrange in circle
+            const h100AngleStep = (2 * Math.PI) / h100Regions;
+            
+            for (let i = 0; i < h100Regions; i++) {
+              const angle = i * h100AngleStep;
+              const lat = country.lat + (innerRadius * Math.cos(angle));
+              const lng = country.lng + (innerRadius * Math.sin(angle));
+              
+              const h100Indicator = L.marker([lat, lng], {
+                icon: L.divIcon({
+                  className: 'h100-indicator',
+                  html: `<div style="
+                    width: 0;
+                    height: 0;
+                    border-left: 8px solid transparent;
+                    border-right: 8px solid transparent;
+                    border-bottom: 14px solid #dc2626;
+                    position: relative;
+                    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+                  ">
+                    <div style="
+                      position: absolute;
+                      top: 2px;
+                      left: -4px;
+                      width: 8px;
+                      text-align: center;
+                      font-size: 8px;
+                      color: white;
+                      font-weight: bold;
+                      line-height: 1;
+                    ">${i + 1}</div>
+                  </div>`,
+                  iconSize: [16, 16],
+                  iconAnchor: [8, 14]
+                })
+              });
+              
+              h100Indicator.bindTooltip(`H100 Region ${i + 1} - Frontier AI Compute`, {
+                direction: 'top',
+                offset: [0, -15]
+              });
+              
+              h100Indicator.addTo(mapInstanceRef.current);
+              markersRef.current.push(h100Indicator);
+            }
+          }
+        }
+      }
     });
 
   }, [filteredCountries]);

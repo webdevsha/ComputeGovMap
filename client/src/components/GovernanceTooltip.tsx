@@ -62,6 +62,74 @@ export default function GovernanceTooltip({ country, onClose }: GovernanceToolti
         </span>
       </div>
 
+      {/* GPU Regions Information */}
+      {(country.gpu_regions !== undefined || country.non_gpu_regions !== undefined || country.h100_regions !== undefined) && (
+        <div className="mb-6">
+          <h4 className="text-sm font-medium text-card-foreground mb-3" data-testid="text-compute-infrastructure-label">
+            Compute Infrastructure
+          </h4>
+          <div className="space-y-2">
+            {country.total_regions !== undefined && (
+              <div className="flex items-center justify-between text-sm font-medium border-b pb-2 mb-2" data-testid="total-regions-info">
+                <span className="text-card-foreground">Total regions</span>
+                <span className="text-card-foreground">{country.total_regions}</span>
+              </div>
+            )}
+            {country.gpu_regions !== undefined && (
+              <div className="flex items-center justify-between text-sm" data-testid="gpu-regions-info">
+                <span className="text-muted-foreground flex items-center">
+                  <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2" />
+                  GPU-enabled regions
+                </span>
+                <span className="font-medium text-card-foreground">{country.gpu_regions}</span>
+              </div>
+            )}
+            {country.non_gpu_regions !== undefined && country.non_gpu_regions > 0 && (
+              <div className="flex items-center justify-between text-sm" data-testid="non-gpu-regions-info">
+                <span className="text-muted-foreground flex items-center">
+                  <span className="inline-block w-2 h-2 bg-gray-400 rounded-full mr-2" />
+                  Non-GPU regions
+                </span>
+                <span className="font-medium text-card-foreground">{country.non_gpu_regions}</span>
+              </div>
+            )}
+            {country.h100_regions !== undefined && country.h100_regions > 0 && (
+              <div className="flex items-center justify-between text-sm" data-testid="h100-regions-info">
+                <span className="text-muted-foreground flex items-center">
+                  <div className="mr-2" style={{
+                    width: '0',
+                    height: '0',
+                    borderLeft: '4px solid transparent',
+                    borderRight: '4px solid transparent',
+                    borderBottom: '6px solid #dc2626'
+                  }}></div>
+                  H100 regions (Frontier AI)
+                </span>
+                <span className="font-medium text-red-600">{country.h100_regions}</span>
+              </div>
+            )}
+            {country.a100_regions !== undefined && country.a100_regions > 0 && (
+              <div className="flex items-center justify-between text-sm" data-testid="a100-regions-info">
+                <span className="text-muted-foreground flex items-center">
+                  <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2" />
+                  A100 regions
+                </span>
+                <span className="font-medium text-blue-600">{country.a100_regions}</span>
+              </div>
+            )}
+            {country.v100_regions !== undefined && country.v100_regions > 0 && (
+              <div className="flex items-center justify-between text-sm" data-testid="v100-regions-info">
+                <span className="text-muted-foreground flex items-center">
+                  <span className="inline-block w-2 h-2 bg-purple-500 rounded-full mr-2" />
+                  V100 regions
+                </span>
+                <span className="font-medium text-purple-600">{country.v100_regions}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Governance Progress Points */}
       <div className="mb-6">
         <h4 className="text-sm font-medium text-card-foreground mb-3" data-testid="text-governance-strengths-label">
